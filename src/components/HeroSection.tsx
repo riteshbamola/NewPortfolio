@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
-import avatar from "@/assets/avatar.jpg";
+import avatar from "@/assets/avatar.png";
 
 const HeroSection = () => {
   return (
@@ -41,7 +41,7 @@ const HeroSection = () => {
           transition={{ delay: 0.3 }}
           className="text-sm uppercase tracking-[0.3em] text-primary mb-4 font-body"
         >
-          Core Backend & Systems Developer
+          Backend Engineer • Distributed Systems
         </motion.p>
 
         <motion.h1
