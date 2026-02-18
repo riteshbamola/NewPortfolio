@@ -64,6 +64,15 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+
+  /* Scroll targets sit below fixed navbar (h-16 = 4rem) */
+  [id="hero"],
+  [id="about"],
+  [id="projects"],
+  [id="skills"],
+  [id="contact"] {
+    scroll-margin-top: 4rem;
+  }
 }
 
 @layer utilities {

@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail } from "lucide-react"; // Swapped Twitter for Mail
+import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 const Footer = () => (
   <footer className="py-8 px-6 border-t border-border/50">
@@ -11,14 +11,16 @@ const Footer = () => (
         {[
           { Icon: Github, href: "https://github.com/riteshbamola" },
           { Icon: Linkedin, href: "https://linkedin.com/in/riteshbamola" },
+          { Icon: Twitter, href: "https://x.com/RiteshBamola", label: "X (Twitter)" },
           { Icon: Mail, href: "mailto:riteshbamola121@gmail.com" },
-        ].map(({ Icon, href }, i) => (
+        ].map(({ Icon, href, label }, i) => (
           <a
             key={i}
             href={href}
             target="_blank"
             rel="noreferrer"
             className="text-muted-foreground hover:text-primary transition-colors p-2"
+            aria-label={label ?? undefined}
           >
             <Icon size={20} />
           </a>

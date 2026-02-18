@@ -1,18 +1,49 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Terminal } from "lucide-react"; // Added Terminal icon
+import { Github, Linkedin, Mail, Menu, Terminal, Twitter, X } from "lucide-react";
 
 const links = ["About", "Projects", "Skills", "Contact"];
+const NAV_HEIGHT = 64; // h-16
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
+  const socialLinks = [
+    { Icon: Github, href: "https://github.com/riteshbamola", label: "GitHub" },
+    {
+      Icon: Linkedin,
+      href: "https://linkedin.com/in/riteshbamola",
+      label: "LinkedIn",
+    },
+    { Icon: Twitter, href: "https://x.com/RiteshBamola", label: "X (Twitter)" },
+    { Icon: Mail, href: "mailto:riteshbamola121@gmail.com", label: "Email" },
+  ] as const;
+
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    const targetId = id.toLowerCase();
+    const element = document.getElementById(targetId);
+    if (!element) return;
+
+    if (open) {
+      setOpen(false);
+
+      // Wait for animation to finish (match your motion duration)
+      setTimeout(() => {
+        smoothScroll(element);
+      }, 300); // adjust if animation duration changes
+    } else {
+      smoothScroll(element);
     }
-    setOpen(false);
+  };
+
+  const smoothScroll = (element: HTMLElement) => {
+    const offset = NAV_HEIGHT; // 64
+    const y = element.getBoundingClientRect().top + window.pageYOffset - offset;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -32,18 +63,35 @@ const Navbar = () => {
         </button>
 
         {/* Desktop */}
-        <ul className="hidden md:flex gap-8">
-          {links.map((l) => (
-            <li key={l}>
-              <button
-                onClick={() => scrollTo(l)}
-                className="text-xs uppercase tracking-widest font-medium text-muted-foreground hover:text-primary transition-all duration-300"
+        <div className="hidden md:flex items-center gap-8">
+          <ul className="flex gap-8">
+            {links.map((l) => (
+              <li key={l}>
+                <button
+                  onClick={() => scrollTo(l)}
+                  className="text-xs uppercase tracking-widest font-medium text-muted-foreground hover:text-primary transition-all duration-300"
+                >
+                  {l}
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-1">
+            {socialLinks.map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
+                aria-label={label}
+                className="text-muted-foreground hover:text-primary transition-colors p-2"
               >
-                {l}
-              </button>
-            </li>
-          ))}
-        </ul>
+                <Icon size={18} />
+              </a>
+            ))}
+          </div>
+        </div>
 
         {/* Mobile toggle */}
         <button
@@ -72,6 +120,23 @@ const Navbar = () => {
                 </button>
               </li>
             ))}
+
+            <li className="pt-4">
+              <div className="flex items-center gap-2">
+                {socialLinks.map(({ Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
+                    aria-label={label}
+                    className="text-muted-foreground hover:text-primary transition-colors p-2"
+                  >
+                    <Icon size={20} />
+                  </a>
+                ))}
+              </div>
+            </li>
           </motion.ul>
         )}
       </AnimatePresence>
